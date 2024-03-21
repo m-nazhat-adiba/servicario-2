@@ -51,13 +51,27 @@ export const addService = async (payload) => {
   }
 };
 
-export const registerUser = async (emailHook, passwordHook) => {
+const createProfile = async (userProfile) => {
+  try {
+    nDb.collection("profiles").doc(userProfile.uid).set(userProfile);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const registerUser = async (emailHook, passwordHook, fullName) => {
   try {
     const userCredential = await nApp
       .auth()
       .createUserWithEmailAndPassword(emailHook.data, passwordHook.data);
     const user = userCredential.user;
     console.log("success", user);
+    const userProfile = {
+      uid: user.uid,
+      fullName: fullName.data,
+      email: emailHook.data,
+    };
+    const newProfile = await createProfile(userProfile);
   } catch (error) {
     var errorCode = error.code;
     var errorMessage = error.message;

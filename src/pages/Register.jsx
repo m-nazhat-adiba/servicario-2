@@ -6,10 +6,11 @@ import * as api from "../api";
 function Register() {
   const emailHook = useInput();
   const passwordHook = useInput();
+  const fullName = useInput();
 
   const registerUser = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-    const register = await api.registerUser(emailHook, passwordHook);
+    const register = await api.registerUser(emailHook, passwordHook, fullName);
   };
 
   return (
@@ -20,6 +21,13 @@ function Register() {
           <p>Please register to proceed</p>
         </header>
         <form onSubmit={registerUser} className="flex flex-col gap-4">
+          <BasicInput
+            id="fullName"
+            handleChange={fullName}
+            type="input"
+            label="Full Name"
+            placeholder="John Doe"
+          />
           <BasicInput
             id="email"
             handleChange={emailHook}

@@ -1,7 +1,7 @@
 import React from "react";
 import BasicInput from "../components/input/BasicInput";
 import useInput from "../hooks/useInput";
-import { nApp } from "../db";
+import * as api from "../api";
 
 function Register() {
   const emailHook = useInput();
@@ -9,17 +9,7 @@ function Register() {
 
   const registerUser = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
-    try {
-      const userCredential = await nApp
-        .auth()
-        .createUserWithEmailAndPassword(emailHook.data, passwordHook.data);
-      const user = userCredential.user;
-      console.log("success", user);
-    } catch (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.error("Error registering user:", errorCode, errorMessage);
-    }
+    const register = await api.registerUser(emailHook, passwordHook);
   };
 
   return (

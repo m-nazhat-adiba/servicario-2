@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { nDb } from "../../db";
+import * as api from "../../api";
 import { useDispatch } from "react-redux";
 import { fetchServices } from "../../redux/slice/servicesSlice";
 import DeleteModal from "../modals/DeleteModal";
@@ -10,17 +10,7 @@ function ServicesCard({ serviceData, actionClick, handleModal }) {
   const dispatch = useDispatch();
 
   const deleteService = async (id) => {
-    try {
-      nDb
-        .collection("services")
-        .doc(id)
-        .delete()
-        .then(() => {
-          console.log("delete success");
-        });
-    } catch (error) {
-      console.error(error);
-    }
+    const deleteItem = await api.deleteService(id);
   };
 
   const handleDeleteService = async (id) => {

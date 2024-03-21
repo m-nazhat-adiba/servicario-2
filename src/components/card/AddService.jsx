@@ -1,21 +1,12 @@
 import React from "react";
-import { nDb } from "../../db";
+import * as api from "../../api";
 import { useDispatch } from "react-redux";
 import { fetchServices } from "../../redux/slice/servicesSlice";
 
 const AddService = () => {
   const dispatch = useDispatch();
   const postService = async (payload) => {
-    try {
-      nDb
-        .collection("services")
-        .add({ ...payload })
-        .then((docRef) => {
-          console.log("success upload service", docRef.id);
-        });
-    } catch (error) {
-      console.error(error);
-    }
+    const postItem = await api.addService(payload);
   };
 
   const handleAddService = async () => {

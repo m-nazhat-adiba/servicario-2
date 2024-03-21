@@ -1,17 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { nDb } from "../../db";
+import * as api from "../../api";
 
 // Define a thunk action creator to fetch services asynchronously
 export const fetchServices = createAsyncThunk(
   "services/fetchServices",
   async () => {
-    const snapshot = await nDb.collection("services").get();
-    const servicesData = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    return servicesData;
+    const responses = await api.fetchServices();
+    return responses;
   }
 );
 

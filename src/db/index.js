@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import "firebase/compat/auth";
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
@@ -34,6 +35,8 @@ const firebaseConfig = {
 
 //namedspace SDK
 export const nDb = firebase.initializeApp(firebaseConfig).firestore();
+export const nApp = firebase.initializeApp(firebaseConfig);
+export const auth = firebase.auth();
 
 //modular SDK
 const app = initializeApp(firebaseConfig);
